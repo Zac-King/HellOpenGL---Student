@@ -4,32 +4,27 @@
 #include "crenderutils.h"
 #include "GameObject.h"
 #include "TankStuff.h"
+#include "Engine.h"
 
-#define S_W 1280
-#define S_H 720
+const unsigned int e_SCREEN_WIDTH  = 1280;
+const unsigned int e_SCREEN_HEIGHT = 720;
+const char		   e_SCREEN_NAME[] = "roar";
 
+#define S_W e_SCREEN_WIDTH
+#define S_H e_SCREEN_HEIGHT
 
 int main()
 {
-	// OpenGL set up the window
-	if (!glfwInit()) return -1;
-	GLFWwindow* window;
+	Engine &eref = Engine::getInstance();
 
-	window = glfwCreateWindow(S_W, S_H, "Hello World", NULL, NULL);
-	if (!window) { glfwTerminate(); return -1; }
-	glfwMakeContextCurrent(window);
-	if (glewInit() != GLEW_OK) { glfwTerminate(); return -1; }
-	////////////////////////////////////////////////////////////////////////
-	auto major = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MAJOR);
-	auto minor = glfwGetWindowAttrib(window, GLFW_CONTEXT_VERSION_MINOR);
-	auto revision = glfwGetWindowAttrib(window, GLFW_CONTEXT_REVISION);
-	printf("GL %i.%i.%i\n", major, minor, revision);
-	////////////////////////////////////////////////////////////////////////
+	eref.loadCore();
+	eref.init();
+
+	GLFWwindow* window = Window::getInstance().getHandle();
 	
 	/// Camera Information
 	mat4 view = mat4MakeIdentity();
-	mat4 ortho = getOrtho(0, S_W, 0, S_H, 0, 100);
-
+	mat4 ortho = getOrtho(0, e_SCREEN_WIDTH, 0, e_SCREEN_HEIGHT, 0, 100);
 
 	// Vertex/Triangle Mesh information
 	Vertex verts[3] = { { { 0, 30, 0, 1},
@@ -68,25 +63,19 @@ int main()
 	float currentTime = 0;
 	float deltaTime = 0;
 	glfwSetTime(0);
-	while (!glfwWindowShouldClose(window))
-	{
-		deltaTime = glfwGetTime() - currentTime;
-		currentTime = glfwGetTime();
 
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glClear(GL_COLOR_BUFFER_BIT);
+	while (eref.step())
+	{	
+		deltaTime = Time::getInstance().getDeltaTime();
 		
 		monkey.draw(view, ortho);
 		banana.draw(view, ortho);
 
-		monkey.update(deltaTime, window);
+		monkey.update(deltaTime, window, &banana);
 		banana.update(deltaTime, window);
-		//update functions also called here
 
-		glfwSwapBuffers(window);
-		glfwPollEvents();
 	}
 
-	glfwTerminate();
+	eref.term();
 	return 0;
 }

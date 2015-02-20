@@ -26,6 +26,12 @@ struct RenderObject
 	unsigned VBO, IBO, VAO, size;
 };
 
+struct TextureData
+{
+	int width, height, format;
+	GLuint handle;
+};
+
 
 RenderObject loadMesh(Vertex *verts, unsigned nverts,
 					  Triangle *tris, unsigned ntris);
@@ -33,4 +39,8 @@ RenderObject loadMesh(Vertex *verts, unsigned nverts,
 void drawRenderObject(RenderObject ro, unsigned shader);
 
 GLuint CreateProgram(const char *a_vertex, const char *a_frag);
+
+TextureData LoadTexture(const char *a_path);
+
+
 

@@ -1,19 +1,27 @@
 #pragma once
 #include "crenderutils.h"
-class Transform
+#include "Component.h"
+#include <vector>
+
+class Transform : public Component
 {
 public:
-	Matrix4 m_local;
+	Matrix4 m_local, m_global;
 	Transform *m_parent;
+	static std::vector <Transform> s_transforms;
 	vec3 &up, &right, &forward, &position;
 	
-	Transform(Transform *a_parent = nullptr, Matrix4 a_local = mat4MakeIdentity())
-		: m_parent(a_parent), m_local(a_local),
+	Transform()
+	  : m_local(mat4MakeIdentity()), 
+		m_global(mat4MakeIdentity()),
+		m_parent(nullptr),
 		right	(*(vec3*)&m_local.v[0]), 
 		up		(*(vec3*)&m_local.v[1]),
 		forward	(*(vec3*)&m_local.v[2]),
 		position(*(vec3*)&m_local.v[3])
-		{ }
+		{
+			s_transforms.push_back(*this);
+		}
 
 
 	Matrix4 getGlobal()

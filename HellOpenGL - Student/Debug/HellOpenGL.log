@@ -1,18 +1,24 @@
-﻿Build started 22/01/2015 12:30:21 PM.
+﻿Build started 30/01/2015 12:27:14 PM.
      1>Project "C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\HellOpenGL.vcxproj" on node 2 (Build target(s)).
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./dep/inc /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt TankStuff.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I./dep/inc /ZI /nologo /W3 /WX- /sdl /Od /Oy- /D _MBCS /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt GameObject.cpp TankStuff.cpp crenderutils.cpp main.cpp
+         crenderutils.cpp
+         Generating Code...
+         Skipping... (no relevant changes detected)
+         main.cpp
          TankStuff.cpp
-     1>c:\users\zac\desktop\hellopengl - student\hellopengl - student\tankstuff.cpp(11): warning C4305: '=' : truncation from 'double' to 'float'
+         GameObject.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\Debug\HellOpenGL.exe" /INCREMENTAL /NOLOGO /LIBPATH:./dep/lib opengl32.lib glew32.lib glew32s.lib glew32mx.lib glew32mxs.lib glfw3.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\Debug\HellOpenGL.pdb" /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\Debug\HellOpenGL.lib" /MACHINE:X86 Debug\cmathutils.obj
          Debug\crenderutils.obj
          Debug\GameObject.obj
          Debug\main.obj
          Debug\TankStuff.obj
-         HellOpenGL.vcxproj -> C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\Debug\HellOpenGL.exe
-     1>Done Building Project "C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\HellOpenGL.vcxproj" (Build target(s)).
+     1>LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+     1>crenderutils.obj : error LNK2019: unresolved external symbol _stbi_load referenced in function "struct TextureData __cdecl LoadTexture(char const *)" (?LoadTexture@@YA?AUTextureData@@PBD@Z)
+     1>C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\Debug\HellOpenGL.exe : fatal error LNK1120: 1 unresolved externals
+     1>Done Building Project "C:\Users\Zac\Desktop\HellOpenGL - Student\HellOpenGL - Student\HellOpenGL.vcxproj" (Build target(s)) -- FAILED.
 
-Build succeeded.
+Build FAILED.
 
-Time Elapsed 00:00:01.32
+Time Elapsed 00:00:01.76

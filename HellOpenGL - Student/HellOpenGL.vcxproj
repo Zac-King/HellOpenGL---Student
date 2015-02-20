@@ -74,12 +74,25 @@
     <ClCompile Include="TankStuff.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Assets.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="cmathutils.h" />
+    <ClInclude Include="Component.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="crenderutils.h" />
+    <ClInclude Include="Engine.h" />
+    <ClInclude Include="Factory.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="GlobalTransformUpdate.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="RenderingComponent.h" />
     <ClInclude Include="Rigidbody.h" />
+    <ClInclude Include="Rigidbody_Component.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="TankStuff.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Transform.h" />
+    <ClInclude Include="Window.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="dep\bin\shaders\simpleShader.frag" />

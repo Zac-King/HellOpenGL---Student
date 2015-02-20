@@ -132,8 +132,8 @@ RenderObject loadMesh(Vertex *verts, unsigned nverts, Triangle *tris, unsigned n
 
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(Triangle) * ntris, tris, GL_STATIC_DRAW);
 
-	glEnableVertexAttribArray(0); // position, 4 bytes (0)
-	glEnableVertexAttribArray(1); //    color, 4 bytes (16)
+	glEnableVertexAttribArray(0);
+	glEnableVertexAttribArray(1);
 
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*) 0);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (char*) 16);
@@ -153,4 +153,30 @@ void drawRenderObject(RenderObject ro,unsigned shader)
 	glUseProgram(0);
 }
 
+#include <stb\stb_image.h>
 
+TextureData LoadTexture(const char *a_path)
+{
+	TextureData td;
+	GLuint &handle = td.handle;
+	int &width	   = td.width;
+	int &height    = td.height;
+	int &format    = td.format; // RGBA, RGB, Greyscale, etc.
+	
+	unsigned char* pixelData = 
+		stbi_load(a_path, &width, &height, &format, STBI_default);
+
+	format = format == 3 ? GL_RGB : GL_RGBA;
+
+	glGenTextures(1, &handle);
+	glBindTexture(GL_TEXTURE_2D, handle);
+	glTexImage2D(GL_TEXTURE_2D, 0, 
+							format, width, height, 0, format, 
+							GL_UNSIGNED_BYTE, pixelData);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glBindTexture(GL_TEXTURE_2D, 0);
+	delete[] pixelData;
+	return td;
+}

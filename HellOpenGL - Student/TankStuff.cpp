@@ -13,9 +13,11 @@ Tank::Tank(RenderObject a_ro, unsigned a_shader, Matrix4 a_tran)
 	m_rigidbody.mass = 1;
 	m_rigidbody.drag = 2;
 	m_rigidbody.gravity = 0;
+
+	t = nullptr;
 }
 
-void Tank::update(float a_dt, GLFWwindow* window)
+void Tank::update(float a_dt, GLFWwindow* window, Turret *child)
 {
 	m_rigidbody.update(m_transform, a_dt);
 	// in tank land...
@@ -27,6 +29,11 @@ void Tank::update(float a_dt, GLFWwindow* window)
 		m_rigidbody.addTorque(m_torque);
 	if (glfwGetKey(window, GLFW_KEY_D))
 		m_rigidbody.addTorque(-m_torque);
+	if (glfwGetKey(window, GLFW_KEY_SPACE))
+		t = new Bullet(m_ro, m_shader, child); 
+
+	if (t)
+		t->update(a_dt);
 }
 
 Turret::Turret(RenderObject a_ro, unsigned a_shader, Tank &parent)
@@ -50,3 +57,27 @@ void Turret::update(float a_dt, GLFWwindow* window)
 		m_transform.m_local = makeRotation(angle) * m_transform.m_local;
 	}
 }
+
+Bullet::Bullet(RenderObject a_ro, unsigned a_shader, Turret *parent)
+{
+	m_ro = a_ro;
+	m_shader = a_shader;
+	m_transform.m_parent = &parent->m_transform;
+
+	m_speed  =  270;			// speed is pixels per second^2
+	m_active = true;
+
+	m_rigidbody.mass = .01;
+	m_rigidbody.drag = 0;
+	m_rigidbody.gravity = 0;
+}
+
+void Bullet::update(float a_dt)
+{
+	if (!m_active)
+		return;
+
+	m_rigidbody.addForce(m_transform.up * m_speed);	// add force to rigid body
+	m_rigidbody.update(m_transform, a_dt);			// need to update the rigid body
+}
+
